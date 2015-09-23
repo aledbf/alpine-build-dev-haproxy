@@ -1,7 +1,5 @@
 
-ifndef BUILD_TAG
-  BUILD_TAG = 0.0.0
-endif
+BUILD_TAG = 1.6-rdev5
 
 COMPONENT := alpine-build-dev-haproxy
 IMAGE = aledbf/$(COMPONENT):$(BUILD_TAG)
@@ -9,7 +7,7 @@ BUILD_IMAGE := $(COMPONENT)-build
 
 build:
 	docker build -t $(BUILD_IMAGE) .
-	docker cp `docker run --name $(BUILD_IMAGE) -d $(BUILD_IMAGE) /bin/sh`:/work/haproxy/x86_64/haproxy-1.6-rdev4.apk .
+	docker cp `docker run --name $(BUILD_IMAGE) -d $(BUILD_IMAGE) /bin/sh`:/work/haproxy/x86_64/haproxy-$(BUILD_TAG).apk .
 	docker rm -f $(BUILD_IMAGE)
 
 clean:
