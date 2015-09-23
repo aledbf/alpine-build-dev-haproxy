@@ -1,0 +1,4 @@
+
+Source: http://git.alpinelinux.org/cgit/aports/tree/main/haproxy
+
+This build is required because there is no official package for haproxy 1.6.x

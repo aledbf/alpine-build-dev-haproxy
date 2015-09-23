@@ -1,0 +1,40 @@
+# Contributor: Jeff Bilyk <jbilyk@gmail.com>
+# Maintainer: Natanael Copa <ncopa@alpinelinux.org>
+pkgname=haproxy
+pkgver=1.6
+pkgrel=dev4
+pkgdesc="A TCP/HTTP reverse proxy for high availability environments"
+url="http://haproxy.1wt.eu"
+arch="all"
+license="GPL"
+depends=""
+makedepends="pcre-dev openssl-dev linux-headers"
+install="haproxy.pre-install haproxy.pre-upgrade"
+subpackages="$pkgname-doc"
+source="http://haproxy.1wt.eu/download/1.6/src/devel/$pkgname-$pkgver-$pkgrel.tar.gz
+	haproxy.initd
+	haproxy.cfg"
+
+build() {
+	cd "$srcdir/$pkgname-$pkgver-$pkgrel"
+	make TARGET=linux2628 USE_PCRE=1 USE_OPENSSL=1 CFLAGS="$CFLAGS" || return 1
+}
+
+package() {
+	cd "$srcdir/$pkgname-$pkgver-$pkgrel"
+	make DESTDIR="$pkgdir" PREFIX=/usr DOCDIR=/usr/share/doc/haproxy \
+		install || return 1
+	install -d "$pkgdir"/var/lib/haproxy
+	install -m755 -D "$srcdir"/$pkgname.initd "$pkgdir"/etc/init.d/$pkgname
+	install -m644 -D "$srcdir"/haproxy.cfg "$pkgdir"/etc/haproxy/haproxy.cfg
+}
+
+md5sums="bb300d99f0ac6114dc997f277d80e5d1  haproxy-1.6-dev4.tar.gz
+c2b6a08009c1eaad4ec1f0ae778d1a04  haproxy.initd
+463f00b30bfb002750d5c5549382365f  haproxy.cfg"
+sha256sums="cdce74ddf64838a2b5c4e7b762c87d5f79137fa6777a8d24f732711fd24c994b  haproxy-1.6-dev4.tar.gz
+33a164deedb83eba3a976ad5e299850d7d333d4f08247b51da01ac7f3e10343f  haproxy.initd
+7e3c03acb9a41e21e21059da609e694e6dd952d9a37297bd39cad37680af213f  haproxy.cfg"
+sha512sums="3acad12cfcf2fd210edc55424a548a6c06a86b0aecda89b0ab531c27b38c6daa9d8f203fb9faa12ac60ea0d1e22ecb09333bf3b3eaec5bbec5187a97adc6e621  haproxy-1.6-dev4.tar.gz
+3ab277bf77fe864ec6c927118dcd70bdec0eb3c54535812d1c3c0995fa66a3ea91a73c342edeb8944caeb097d2dd1a7761099182df44af5e3ef42de6e2176d26  haproxy.initd
+89d1366352af9cc7cb338779341d460606e2e3cfe9e4f7d5169af46680accb07035fab9a4bbb87dfbe383bb146e8e4d1e95a29e3d36ff64e97603a317a0b1b78  haproxy.cfg"
