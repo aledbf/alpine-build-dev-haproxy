@@ -2,7 +2,7 @@
 # Maintainer: Natanael Copa <ncopa@alpinelinux.org>
 pkgname=haproxy
 pkgver=1.6
-pkgrel=dev5
+pkgrel=dev6
 pkgdesc="A TCP/HTTP reverse proxy for high availability environments"
 url="http://haproxy.1wt.eu"
 arch="all"
@@ -29,12 +29,12 @@ package() {
 	install -m644 -D "$srcdir"/haproxy.cfg "$pkgdir"/etc/haproxy/haproxy.cfg
 }
 
-md5sums="45329c7de991870f51a9e0270064447d  haproxy-1.6-dev5.tar.gz
+md5sums="66f1a6b055161a63cd62443f4d0f09db  haproxy-1.6-dev6.tar.gz
 c2b6a08009c1eaad4ec1f0ae778d1a04  haproxy.initd
 463f00b30bfb002750d5c5549382365f  haproxy.cfg"
-sha256sums="82dcbad28635809c77c81fb32d7f86f842342cd7fa8b4f3b722357c57d13d62a  haproxy-1.6-dev5.tar.gz
+sha256sums="5a322a0215461cdc71c8259eb1b7f44e1002482d93c91c6f3093c45287215e67  haproxy-1.6-dev6.tar.gz
 33a164deedb83eba3a976ad5e299850d7d333d4f08247b51da01ac7f3e10343f  haproxy.initd
 7e3c03acb9a41e21e21059da609e694e6dd952d9a37297bd39cad37680af213f  haproxy.cfg"
-sha512sums="a37050a8d94bbea14ccf0b383684b24b60b1d20db8695295ae9786cb62243f00d37609c435c8f952dc403e0f8465c1c5c6334b814625c2296da3ac15445d933b  haproxy-1.6-dev5.tar.gz
+sha512sums="7c232b5056d4bb892a297e16c6bdbeca30e38b48acda54f765a18816242806a1e57990a87b4ed95f44a46279a37d1c6bf78e226bdc0dc0d0839c9db7402d7a70  haproxy-1.6-dev6.tar.gz
 3ab277bf77fe864ec6c927118dcd70bdec0eb3c54535812d1c3c0995fa66a3ea91a73c342edeb8944caeb097d2dd1a7761099182df44af5e3ef42de6e2176d26  haproxy.initd
 89d1366352af9cc7cb338779341d460606e2e3cfe9e4f7d5169af46680accb07035fab9a4bbb87dfbe383bb146e8e4d1e95a29e3d36ff64e97603a317a0b1b78  haproxy.cfg"

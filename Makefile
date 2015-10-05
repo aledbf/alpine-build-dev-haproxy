@@ -1,5 +1,5 @@
 
-BUILD_TAG = 1.6-rdev5
+BUILD_TAG = 1.6-rdev6
 
 COMPONENT := alpine-build-dev-haproxy
 IMAGE = aledbf/$(COMPONENT):$(BUILD_TAG)
