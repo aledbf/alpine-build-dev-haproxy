@@ -2,39 +2,40 @@
 # Maintainer: Natanael Copa <ncopa@alpinelinux.org>
 pkgname=haproxy
 pkgver=1.6
-pkgrel=dev6
+pkgrel=0
 pkgdesc="A TCP/HTTP reverse proxy for high availability environments"
 url="http://haproxy.1wt.eu"
 arch="all"
 license="GPL"
 depends=""
-makedepends="pcre-dev openssl-dev linux-headers"
+makedepends="pcre-dev openssl-dev linux-headers readline lua5.3-dev"
 install="haproxy.pre-install haproxy.pre-upgrade"
-subpackages="$pkgname-doc"
-source="http://haproxy.1wt.eu/download/1.6/src/devel/$pkgname-$pkgver-$pkgrel.tar.gz
+subpackages=""
+pkgfullname=$pkgname-$pkgver.$pkgrel
+source="http://www.haproxy.org/download/1.6/src/$pkgfullname.tar.gz
 	haproxy.initd
 	haproxy.cfg"
 
 build() {
-	cd "$srcdir/$pkgname-$pkgver-$pkgrel"
-	make TARGET=linux2628 USE_PCRE=1 USE_OPENSSL=1 CFLAGS="$CFLAGS" || return 1
+	cd "$srcdir/$pkgfullname"
+	make TARGET=linux2628 USE_PCRE=1 USE_PCRE_JIT=1 USE_OPENSSL=1 USE_LUA=1 LUA_LIB=/usr/lib/lua5.3/ LUA_INC=/usr/include/lua5.3 CFLAGS="$CFLAGS" || return 1
 }
 
 package() {
-	cd "$srcdir/$pkgname-$pkgver-$pkgrel"
+	cd "$srcdir/$pkgfullname"
 	make DESTDIR="$pkgdir" PREFIX=/usr DOCDIR=/usr/share/doc/haproxy \
-		install || return 1
+		LUA_LIB=/usr/lib/lua5.3/ LUA_INC=/usr/include/lua5.3 install-bin install-man || return 1
 	install -d "$pkgdir"/var/lib/haproxy
 	install -m755 -D "$srcdir"/$pkgname.initd "$pkgdir"/etc/init.d/$pkgname
 	install -m644 -D "$srcdir"/haproxy.cfg "$pkgdir"/etc/haproxy/haproxy.cfg
 }
 
-md5sums="66f1a6b055161a63cd62443f4d0f09db  haproxy-1.6-dev6.tar.gz
+md5sums="2361c7dd0a709a1b235215225875f34c  haproxy-1.6.0.tar.gz
 c2b6a08009c1eaad4ec1f0ae778d1a04  haproxy.initd
 463f00b30bfb002750d5c5549382365f  haproxy.cfg"
-sha256sums="5a322a0215461cdc71c8259eb1b7f44e1002482d93c91c6f3093c45287215e67  haproxy-1.6-dev6.tar.gz
+sha256sums="e83a272b7d3638cf1d37bba58d3e75f497c1862315ee5bb7f5efc1d98d26e25b  haproxy-1.6.0.tar.gz
 33a164deedb83eba3a976ad5e299850d7d333d4f08247b51da01ac7f3e10343f  haproxy.initd
 7e3c03acb9a41e21e21059da609e694e6dd952d9a37297bd39cad37680af213f  haproxy.cfg"
-sha512sums="7c232b5056d4bb892a297e16c6bdbeca30e38b48acda54f765a18816242806a1e57990a87b4ed95f44a46279a37d1c6bf78e226bdc0dc0d0839c9db7402d7a70  haproxy-1.6-dev6.tar.gz
+sha512sums="44bfcd040c87e0c3e7d925bb671009e8ed568a7a32ae32ac5d58921417aaa458b772a1368876fee8bf9252106fb315c1c3d29b7f03739a239567b86fb3c25e8e  haproxy-1.6.0.tar.gz
 3ab277bf77fe864ec6c927118dcd70bdec0eb3c54535812d1c3c0995fa66a3ea91a73c342edeb8944caeb097d2dd1a7761099182df44af5e3ef42de6e2176d26  haproxy.initd
 89d1366352af9cc7cb338779341d460606e2e3cfe9e4f7d5169af46680accb07035fab9a4bbb87dfbe383bb146e8e4d1e95a29e3d36ff64e97603a317a0b1b78  haproxy.cfg"
